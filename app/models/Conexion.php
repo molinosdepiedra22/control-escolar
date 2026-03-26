@@ -1,11 +1,10 @@
-
 <?php
 
 require_once __DIR__ . '/../../config/database.php';
 
-class Conexiones {
+class Conexion {
 
-    public static function getDB() {
+    public static function conectar() {
         return Database::connect();
     }
 }

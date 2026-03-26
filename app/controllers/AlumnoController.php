@@ -10,7 +10,9 @@ class AlumnoController {
 
     public static function index() {
         $alumnos = Alumno::all();
-        require __DIR__ . '/../views/alumnos/index.php';
+
+        $view = __DIR__ . '/../views/alumnos/index.php';
+        require __DIR__ . '/../views/layout.php';
     }
 
     public static function store() {
