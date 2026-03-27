@@ -48,6 +48,14 @@ switch ($action) {
         AlumnoController::delete();
         break;
 
+    case 'edit_alumno':
+        AlumnoController::edit();
+        break;
+        
+    case 'update_alumno':
+        AlumnoController::update();
+        break;
+
     // 📊 Dashboard
     case 'index':
         DashboardController::index();
@@ -64,6 +72,14 @@ switch ($action) {
 
     case 'delete_maestro':
         MaestroController::delete();
+        break;
+
+    case 'edit_maestro':
+        MaestroController::edit();
+        break;
+        
+    case 'update_maestro':
+        MaestroController::update();
         break;
 
     // 📚 Materias
