@@ -6,20 +6,23 @@ session_start();
 // Controladores
 require_once __DIR__ . '/../app/controllers/AlumnoController.php';
 require_once __DIR__ . '/../app/controllers/AuthController.php';
+require_once __DIR__ . '/../app/controllers/MaestroController.php';
+require_once __DIR__ . '/../app/controllers/MateriaController.php';
+require_once __DIR__ . '/../app/controllers/DashboardController.php';
 
 // Obtener acción
 $action = $_GET['action'] ?? 'index';
 
-// 🔐 Protección de rutas (solo deja pasar login)
-if (!isset($_SESSION['usuario']) && $action != 'login' && $action != 'autenticar') {
+// 🔐 Protección de rutas
+if (!isset($_SESSION['usuario']) && !in_array($action, ['login', 'autenticar'])) {
     header("Location: /control-escolar/public/?action=login");
     exit;
 }
 
-//Rutas
+// 🎯 Rutas
 switch ($action) {
 
-    // Auth
+    // 🔐 Auth
     case 'login':
         AuthController::login();
         break;
@@ -32,17 +35,50 @@ switch ($action) {
         AuthController::logout();
         break;
 
-    // Alumnos
-    case 'create':
+    // 👨‍🎓 Alumnos
+    case 'alumnos':
+        AlumnoController::index();
+        break;
+
+    case 'create_alumno':
         AlumnoController::store();
         break;
 
-    case 'delete':
+    case 'delete_alumno':
         AlumnoController::delete();
         break;
 
-    // Dashboard / inicio
+    // 📊 Dashboard
     case 'index':
+        DashboardController::index();
+        break;
+
+    // 👨‍🏫 Maestros
+    case 'maestros':
+        MaestroController::index();
+        break;
+
+    case 'create_maestro':
+        MaestroController::store();
+        break;
+
+    case 'delete_maestro':
+        MaestroController::delete();
+        break;
+
+    // 📚 Materias
+    case 'materias':
+        MateriaController::index();
+        break;
+
+    case 'create_materia':
+        MateriaController::store();
+        break;
+
+    case 'delete_materia':
+        MateriaController::delete();
+        break;
+
     default:
         AlumnoController::index();
         break;

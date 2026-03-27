@@ -1,26 +1,31 @@
-
 <?php
 
 require_once __DIR__ . '/../models/Maestro.php';
-
-if (!class_exists('Maestro')) {
-    die("❌ NO se cargó Maestro");
-}
 
 class MaestroController {
 
     public static function index() {
         $maestros = Maestro::all();
-        require __DIR__ . '/../views/maestros/index.php';
+
+        $view = __DIR__ . '/../views/maestros/index.php';
+        require __DIR__ . '/../views/layout.php';
     }
 
     public static function store() {
-        Maestro::create($_POST['nombre'], $_POST['correo']);
-        header("Location: /control-escolar/public/");
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            Maestro::create($_POST['nombre'], $_POST['correo']);
+        }
+
+        header("Location: /control-escolar/public/?action=maestros");
+        exit;
     }
 
     public static function delete() {
-        Maestro::delete($_GET['id']);
-        header("Location: /control-escolar/public/");
+        if (isset($_GET['id'])) {
+            Maestro::delete($_GET['id']);
+        }
+
+        header("Location: /control-escolar/public/?action=maestros");
+        exit;
     }
 }

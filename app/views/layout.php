@@ -1,4 +1,8 @@
 <?php
+// Asegurar sesión
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,15 +24,37 @@
         <hr>
 
         <ul class="nav flex-column">
+
             <li class="nav-item">
-                <a href="?action=index" class="nav-link text-white">🏠 Dashboard</a>
+                <a href="/control-escolar/public/?action=index" class="nav-link text-white">
+                    🏠 Dashboard
+                </a>
             </li>
+
             <li class="nav-item">
-                <a href="?action=index" class="nav-link text-white">👨‍🎓 Alumnos</a>
+                <a href="/control-escolar/public/?action=alumnos" class="nav-link text-white">
+                    👨‍🎓 Alumnos
+                </a>
             </li>
+
             <li class="nav-item">
-                <a href="?action=login" class="nav-link text-white">🔐 Login</a>
+                <a href="/control-escolar/public/?action=maestros" class="nav-link text-white">
+                    👨‍🏫 Maestros
+                </a>
             </li>
+
+            <li class="nav-item">
+                <a href="/control-escolar/public/?action=materias" class="nav-link text-white">
+                    📚 Materias
+                </a>
+            </li>
+
+            <li class="nav-item mt-3">
+                <a href="/control-escolar/public/?action=logout" class="nav-link text-danger">
+                    🚪 Cerrar sesión
+                </a>
+            </li>
+
         </ul>
     </div>
 
@@ -37,13 +63,22 @@
 
         <!-- Navbar -->
         <nav class="navbar navbar-light bg-light px-3">
-            <span>Bienvenido: <?= $_SESSION['usuario']['correo'] ?? 'Invitado' ?></span>
-
-            <a href="?action=logout" class="btn btn-danger btn-sm">Cerrar sesión</a>
+            <span>
+                👤 <?= $_SESSION['usuario']['correo'] ?? 'Invitado' ?>
+            </span>
         </nav>
 
+        <!-- Contenido dinámico -->
         <div class="container mt-4">
-            <?php include $view; ?>
+
+            <?php
+            if (isset($view) && file_exists($view)) {
+                include $view;
+            } else {
+                echo "<div class='alert alert-danger'>⚠️ Vista no encontrada</div>";
+            }
+            ?>
+
         </div>
 
     </div>
